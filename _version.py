@@ -1,21 +1,6 @@
-"""
-store the current version info of jupyter-events.
-"""
-from __future__ import annotations
+version_info = (1, 0, 0, 'final', 0)
 
-import re
+_specifier_ = {'alpha': 'a', 'beta': 'b', 'candidate': 'rc', 'final': ''}
 
-# Version string must appear intact for hatch versioning
-__version__ = "0.10.0"
-
-# Build up version_info tuple for backwards compatibility
-pattern = r"(?P<major>\d+).(?P<minor>\d+).(?P<patch>\d+)(?P<rest>.*)"
-match = re.match(pattern, __version__)
-assert match is not None
-parts: list[object] = [int(match[part]) for part in ["major", "minor", "patch"]]
-if match["rest"]:
-    parts.append(match["rest"])
-version_info = tuple(parts)
-
-kernel_protocol_version_info = (5, 3)
-kernel_protocol_version = "{}.{}".format(*kernel_protocol_version_info)
+__version__ = '%s.%s.%s%s'%(version_info[0], version_info[1], version_info[2],
+  '' if version_info[3]=='final' else _specifier_[version_info[3]]+str(version_info[4]))

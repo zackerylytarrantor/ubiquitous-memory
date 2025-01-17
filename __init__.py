@@ -1,6 +1,19 @@
-# flake8: noqa
-from ._version import __version__
-from .logger import EVENTS_METADATA_VERSION, EventLogger
-from .schema import EventSchema
 
-__all__ = ["__version__", "EVENTS_METADATA_VERSION", "EventLogger", "EventSchema"]
+import json
+import os.path as osp
+
+from ._version import __version__
+
+HERE = osp.abspath(osp.dirname(__file__))
+
+with open(osp.join(HERE, 'labextension', 'package.json')) as fid:
+    data = json.load(fid)
+
+def _jupyter_labextension_paths():
+    return [{
+        'src': 'labextension',
+        'dest': data['name']
+    }]
+
+
+
